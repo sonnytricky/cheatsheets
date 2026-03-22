@@ -1,0 +1,32 @@
+---
+name: YAML & Python Check
+on: [push]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install yamllint
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --user yamllint
+          echo "$HOME/.local/bin" >> $GITHUB_PATH  # <-- fügt yamllint dem PATH hinzu
+
+      - name: Check YAML
+        run: yamllint . --config-file .yamllint || true   # <-- ignoriert Fehler für Stil
+
+      - name: Check Python syntax
+        run: find . -name "*.py" -exec python -m py_compile {} +
+
+      - name: Install black
+        run: python -m pip install black
+
+      - name: Check Python formatting
+        run: black --check .
