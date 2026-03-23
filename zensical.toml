@@ -1,10 +1,17 @@
 [project]
 
 site_name = "cheatsheets"
-# site_description = ""
+site_description = ""
 site_author = "sonnytricky"
-#site_url = "https://www.example.com/"
+# site_url = "https://www.example.com/"
+
 copyright = "© 2026 sonnytricky"
+
+repo_name = "sonnytricky/cheatsheets"
+repo_url = "https://github.com/sonnytricky/cheatsheets"
+
+edit_uri = "edit/main/docs/"
+
 
 # ----------------------------------------------------------------------------
 # navigation
@@ -52,8 +59,8 @@ copyright = "© 2026 sonnytricky"
 # - https://zensical.org/docs/customization/#extending-the-theme
 #
 #custom_dir = "overrides"                                                   # in diesem ordner kann man die zensical vorlagen überschreiben
-#favicon = "images/favicon.png"                                             # der image ordner muss in docs/ sein
-#logo = "assets/logo.png"                                                   # der assets ordner muss in den docs/sein
+favicon = "images/favicon.png"                                              # der image ordner muss in docs/ sein
+logo = "assets/logo.png"                                                    # der assets ordner muss in den docs/sein
 language = "de"                                                             # war auf "en"
 
 # ----------------------------------------------------------------------------
@@ -65,17 +72,9 @@ features = [
     # https://zensical.org/docs/setup/header/#announcement-bar
     "announce.dismiss",
 
-    # If you have a repository configured and turn on this feature, Zensical
-    # will generate an edit button for the page. This works for common
-    # repository hosting services.
-    # https://zensical.org/docs/setup/repository/#content-actions
-    #"content.action.edit",
+#    "content.action.edit",                                                  # Edit this page on github  # es muss dann noch -> unter [projekt] edit_uri = "edit/main/docs/" stehen
 
-    # If you have a repository configured and turn on this feature, Zensical
-    # will generate a button that allows the user to view the Markdown
-    # code for the current page.
-    # https://zensical.org/docs/setup/repository/#content-actions
-    #"content.action.view",
+    "content.action.view",                                                  # View source of this page on github
 
     # Code annotations allow you to add an icon with a tooltip to your
     # code blocks to provide explanations at crucial points.
@@ -236,6 +235,22 @@ toggle.name = "Switch to light mode"
 # ----------------------------------------------------------------------------
 # The "extra" section contains miscellaneous settings.
 # ----------------------------------------------------------------------------
-#[[project.extra.social]]
-#icon = "fontawesome/brands/github"
-#link = "https://github.com/user/repo"
+
+# ---------- Soziale Medien
+
+# GitHub
+[[project.extra.social]]
+icon = "fontawesome/brands/github"
+link = "https://github.com/sonnytricky"
+name = "sonnytricky on GitHub"
+
+# Instagram
+[[project.extra.social]]
+icon = "fontawesome/brands/instagram"
+link = "https://www.instagram.com/sonnytricky/"
+name = "sonnytricky on Instagram"
+
+# ---------- Footer
+
+[project.extra]
+generator = false

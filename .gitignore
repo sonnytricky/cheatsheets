@@ -28,6 +28,7 @@
 !*/.github/workflows/
 !*/images/
 !*/docs/git/
+!*/docs/assets/logo.png
 !*/docs/images/
 
 ##############################################
@@ -57,7 +58,8 @@
 !/images/cheatsheets.png
 !/images/git-cheatsheet.png
 !/images/social-preview.png
-!/docs/images/favicon.ico
+!/docs/images/favicon.png
+!/docs/assets/logo.png
 !/docs/index.md
 !/docs/markdown.md
 !/docs/git/index.md

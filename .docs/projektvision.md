@@ -5,7 +5,7 @@
 - [ ] Content tabs
 - [ ] Icons, Emojis
 - [ ] Task Lists
-- [ ] im footer ohne made with zensical
+- [x] im footer ohne made with zensical
 - [ ] 
 
 ---
