@@ -1,9 +1,9 @@
 ---
 name: Task
 about: Allgemeine Aufgabe
-title: "Task: "
+title: "TODO: "
 labels:
-  - Task
+  - TODO
 ---
 
 ## Aufgabe
