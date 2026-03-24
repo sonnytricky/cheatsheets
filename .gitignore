@@ -64,7 +64,7 @@
 !/docs/markdown.md
 !/docs/git/index.md
 !/docs/git/Ordner_zur_Repo_machen.md
-!/.gitattributes
+#!/.gitattributes
 !/.gitignore
 # WICHTIG: .yamllint <-> ignoriert Fehler für Stil
 !/.yamllint
