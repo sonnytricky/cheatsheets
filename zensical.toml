@@ -12,35 +12,28 @@ repo_url = "https://github.com/sonnytricky/cheatsheets"
 
 edit_uri = "edit/main/docs/"
 
+docs_dir = "docs"
+site_dir = "site"
+
 
 # ----------------------------------------------------------------------------
 # navigation
 # ----------------------------------------------------------------------------
-# nav = [
-#   { "Get started" = "index.md" },
-#   { "Markdown in 5min" = "markdown.md" },
-# ]
+
+nav = [
+  {"Get started" = "index.md"},
+  {"GIT" = [
+     "git/index.md",
+     "git/Ordner_zur_Repo_machen.md" 
+  ]},
+  {"Markdown" = "markdown/markdown.md"}  
+]
 
 # ----------------------------------------------------------------------------
 # css und javascript
 # ----------------------------------------------------------------------------
 
-# With the "extra_css" option you can add your own CSS styling to customize
-# your Zensical project according to your needs. You can add any number of
-# CSS files.
-#
-# The path provided should be relative to the "docs_dir".
-#
-# Read more: https://zensical.org/docs/customization/#additional-css
-#
-#extra_css = ["stylesheets/extra.css"]
-
-# With the `extra_javascript` option you can add your own JavaScript to your
-# project to customize the behavior according to your needs.
-#
-# The path provided should be relative to the "docs_dir".
-#
-# Read more: https://zensical.org/docs/customization/#additional-javascript
+#extra_css = ["stylesheets/extra.css"]                                      # der Ordner wurden bereits angelegt
 #extra_javascript = ["javascripts/extra.js"]
 
 # ----------------------------------------------------------------------------
@@ -50,15 +43,8 @@ edit_uri = "edit/main/docs/"
 [project.theme]
 #variant = "classic"                                                        # classic = mklook
 
-# Zensical allows you to override specific blocks, partials, or whole
-# templates as well as to define your own templates. To do this, uncomment
-# the custom_dir setting below and set it to a directory in which you
-# keep your template overrides.
-#
-# Read more:
-# - https://zensical.org/docs/customization/#extending-the-theme
-#
-#custom_dir = "overrides"                                                   # in diesem ordner kann man die zensical vorlagen überschreiben
+#custom_dir = "overrides"                                                   # in diesem ordner kann man die zensical HTML-vorlagen überschreiben, ist auch für die bootstrap-logos
+
 favicon = "images/favicon.png"                                              # der image ordner muss in docs/ sein
 logo = "assets/logo.png"                                                    # der assets ordner muss in den docs/sein
 language = "de"                                                             # war auf "en"
@@ -81,15 +67,9 @@ features = [
     # https://zensical.org/docs/authoring/code-blocks/#code-annotations
     "content.code.annotate",
 
-    # This feature turns on a button in code blocks that allow users to
-    # copy the content to their clipboard without first selecting it.
-    # https://zensical.org/docs/authoring/code-blocks/#code-copy-button
-    "content.code.copy",
+    "content.code.copy",                                                     # copy button
 
-    # Code blocks can include a button to allow for the selection of line
-    # ranges by the user.
-    # https://zensical.org/docs/authoring/code-blocks/#code-selection-button
-    "content.code.select",
+#    "content.code.select",
 
     # Zensical can render footnotes as inline tooltips, so the user can read
     # the footnote without leaving the context of the document.
@@ -112,100 +92,41 @@ features = [
     # https://zensical.org/docs/setup/header/#automatic-hiding
     # "header.autohide",
 
-    # Turn on this feature to expand all collapsible sections in the
-    # navigation sidebar by default.
-    # https://zensical.org/docs/setup/navigation/#navigation-expansion
-    # "navigation.expand",
+#   "navigation.expand",                                                   # Navigaion ausgeklappt
 
-    # This feature turns on navigation elements in the footer that allow the
-    # user to navigate to a next or previous page.
-    # https://zensical.org/docs/setup/footer/#navigation
     "navigation.footer",
 
-    # When section index pages are enabled, documents can be directly attached
-    # to sections, which is particularly useful for providing overview pages.
-    # https://zensical.org/docs/setup/navigation/#section-index-pages
-    "navigation.indexes",
+    "navigation.indexes",                                                 # Inhaltsverzeichnisseiten
 
-    # When instant navigation is enabled, clicks on all internal links will be
-    # intercepted and dispatched via XHR without fully reloading the page.
-    # https://zensical.org/docs/setup/navigation/#instant-navigation
-    "navigation.instant",
+    "navigation.instant",                                                 # Vorladen der Seiten
 
-    # With instant prefetching, your site will start to fetch a page once the
-    # user hovers over a link. This will reduce the perceived loading time
-    # for the user.
-    # https://zensical.org/docs/setup/navigation/#instant-prefetching
-    "navigation.instant.prefetch",
+    "navigation.instant.prefetch",                                         # Sofortiges Vorladen
 
-    # In order to provide a better user experience on slow connections when
-    # using instant navigation, a progress indicator can be enabled.
-    # https://zensical.org/docs/setup/navigation/#progress-indicator
-    #"navigation.instant.progress",
+#   "navigation.instant.progress",                                         # Fortschritsanzeige
 
-    # When navigation paths are activated, a breadcrumb navigation is rendered
-    # above the title of each page
-    # https://zensical.org/docs/setup/navigation/#navigation-path
-    "navigation.path",
+    "navigation.path",                                                      # es steht dann oben der Pfad 
 
-    # When pruning is enabled, only the visible navigation items are included
-    # in the rendered HTML, reducing the size of the built site by 33% or more.
-    # https://zensical.org/docs/setup/navigation/#navigation-pruning
-    #"navigation.prune",
+#   "navigation.prune",                                                    # ob der Text scrollt oder nicht
 
-    # When sections are enabled, top-level sections are rendered as groups in
-    # the sidebar for viewports above 1220px, but remain as-is on mobile.
-    # https://zensical.org/docs/setup/navigation/#navigation-sections
-    "navigation.sections",
+#   "navigation.sections",                                                 # Navigationsabschnitte
 
-    # When tabs are enabled, top-level sections are rendered in a menu layer
-    # below the header for viewports above 1220px, but remain as-is on mobile.
-    # https://zensical.org/docs/setup/navigation/#navigation-tabs
-    #"navigation.tabs",
+#   "navigation.tabs",                                                     # tabs in der Header leiste
 
-    # When sticky tabs are enabled, navigation tabs will lock below the header
-    # and always remain visible when scrolling down.
-    # https://zensical.org/docs/setup/navigation/#sticky-navigation-tabs
-    #"navigation.tabs.sticky",
+    "navigation.tabs.sticky",                                               # linke seitenleiste immer sichtbar
 
-    # A back-to-top button can be shown when the user, after scrolling down,
-    # starts to scroll up again.
-    # https://zensical.org/docs/setup/navigation/#back-to-top-button
-    "navigation.top",
+    "navigation.top",                                                       # back-to-top button
 
-    # When anchor tracking is enabled, the URL in the address bar is
-    # automatically updated with the active anchor as highlighted in the table
-    # of contents.
-    # https://zensical.org/docs/setup/navigation/#anchor-tracking
-    "navigation.tracking",
+    "navigation.tracking",                                                  # Ankerverfolgung der Überschriften
 
-    # When search highlighting is enabled and a user clicks on a search result,
-    # Zensical will highlight all occurrences after following the link.
-    # https://zensical.org/docs/setup/search/#search-highlighting
     "search.highlight",
 
-    # When anchor following for the table of contents is enabled, the sidebar
-    # is automatically scrolled so that the active anchor is always visible.
-    # https://zensical.org/docs/setup/navigation/#anchor-following
-    # "toc.follow",
+    "toc.follow",                                                           # verfolgt die Überschriften
 
-    # When navigation integration for the table of contents is enabled, it is
-    # always rendered as part of the navigation sidebar on the left.
-    # https://zensical.org/docs/setup/navigation/#navigation-integration
-    #"toc.integrate",
+#    "toc.integrate",                                                       # Inhaltsverzeichnis in den Überschriften
 ]
 
+# ---------------------------------------------------------------------------
 
-
-# ----------------------------------------------------------------------------
-# If you don't have a dedicated project logo, you can use a built-in icon from
-# the icon sets shipped in Zensical. Please note that the setting lives in a
-# different subsection, and that the above take precedence over the icon.
-#
-# Read more:
-# - https://zensical.org/docs/setup/logo-and-icons
-# - https://github.com/zensical/ui/tree/master/dist/.icons
-# ----------------------------------------------------------------------------
 #[project.theme.icon]
 #logo = "lucide/smile"
 
@@ -213,16 +134,11 @@ features = [
 #text = "Inter"                                                               # ändert die Schriftart
 #code = "Jetbrains Mono"                                                      # ändert die Schriftart
 
-# ----------------------------------------------------------------------------
-# In the "palette" subsection you can configure options for the color scheme.
-# You can configure different color schemes, e.g., to turn on dark mode,
-# that the user can switch between. Each color scheme can be further
-# customized.
-#
-# Read more:
-# - https://zensical.org/docs/setup/colors/
-# ----------------------------------------------------------------------------
-[[project.theme.palette]]                                                      # Hel und Dunkel modus und deren icons
+# --------------------------------------------------------------------------- 
+# Hell und Dunkel modus und deren icons
+# --------------------------------------------------------------------------- 
+
+[[project.theme.palette]]                                                      
 scheme = "default"
 toggle.icon = "lucide/sun"
 toggle.name = "Switch to dark mode"
@@ -231,6 +147,9 @@ toggle.name = "Switch to dark mode"
 scheme = "slate"
 toggle.icon = "lucide/moon"
 toggle.name = "Switch to light mode"
+
+primary = "indigo"                                                            # red pink purple deep purple indigo blue light blue cyan teal green light green lime yellow amber orange deep orange brown grey blue grey black white
+accent = "orange"                                                             # red pink purple deep purple indigo blue light blue cyan teal green light green lime yellow amber orange deep orange
 
 # ----------------------------------------------------------------------------
 # The "extra" section contains miscellaneous settings.
