@@ -30,6 +30,7 @@
 !*/docs/git/
 !*/docs/assets/logo.png
 !*/docs/images/
+!*/docs/stylesheets/
 
 ##############################################
 # Ausnahme: diese Dateien NICHT ignorieren
@@ -52,6 +53,7 @@
 !/.github/ISSUE_TEMPLATE/idea.md
 !/.github/ISSUE_TEMPLATE/task.md
 !/.github/workflows/Demo.yaml
+!/.github/workflows/docs.yml
 !/.github/workflows/lint.yml
 !/.github/PULL_REQUEST_TEMPLATE.md
 !/images/Cheat-Sheets.webp
@@ -60,11 +62,12 @@
 !/images/social-preview.png
 !/docs/images/favicon.png
 !/docs/assets/logo.png
+!/docs/stylesheets/extra.css
 !/docs/index.md
 !/docs/markdown.md
 !/docs/git/index.md
 !/docs/git/Ordner_zur_Repo_machen.md
-#!/.gitattributes
+!/.gitattributes
 !/.gitignore
 # WICHTIG: .yamllint <-> ignoriert Fehler für Stil
 !/.yamllint
