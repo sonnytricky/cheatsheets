@@ -2,49 +2,9 @@
 icon: note-text-outline
 ---
 
-
 # Notizen:
 
-### Verschachtelte Notizen:
-
-
-!!! note "Outer Note"
-
-    Außere Notitz
-
-    !!! note "Inner Note"
-
-        Innere Notitz
-
----
-
-???+ note
-
-    Zusammenklappbar
-
-
-
-!!! info inline end "sonnytricky"
-
-    Mit info inline `end` "sonnytricky"
-    ist die Notitz rechts
-
-
-
-!!! info inline "sonnytricky"
-
-    und ohne `end` ist sie links
-
-
-
-!!! example
-
-    Immer zuerst die Notitz und dann den Code-Block
-
----
-
-
-# Unterstützte Typen:
+## Unterstützte Typen:
 
 In Zensical stehen folgende Typen zur Verfügung. Der Standardwert ist note.
 
@@ -111,3 +71,44 @@ In Zensical stehen folgende Typen zur Verfügung. Der Standardwert ist note.
 !!! quote
 
     Beispiel
+
+
+---
+
+## Verschachtelte Notizen:
+
+
+!!! note "Outer Note"
+
+    Außere Notitz
+
+    !!! note "Inner Note"
+
+        Innere Notitz
+
+---
+
+???+ note
+
+    Zusammenklappbar
+
+
+
+!!! info inline end "sonnytricky"
+
+    Mit info inline `end` "sonnytricky"
+    ist die Notitz rechts
+
+
+
+!!! info inline "sonnytricky"
+
+    und ohne `end` ist sie links
+
+
+
+!!! example
+
+    Immer zuerst die Notitz und dann den Code-Block
+
+---

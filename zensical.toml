@@ -31,8 +31,8 @@ nav = [
   {"Markdown" = "markdown/markdown.md"},  
   {"Examples" = [
      "examples/index.md",
-     "examples/Seite_1.md",
-     "examples/Seite_2.md",
+     "examples/Checkboxen.md",
+     "examples/Code-Blöcke.md",
      "examples/Notizen.md"
   ]},
 ]
@@ -51,10 +51,10 @@ nav = [
 [project.theme]
 #variant = "classic"                                                        # classic = mklook
 
-custom_dir = "overrides"                                                   # in diesem ordner kann man die zensical HTML-vorlagen überschreiben, ist auch für die bootstrap-logos
+custom_dir = "overrides"                                                    # in diesem ordner kann man die zensical HTML-vorlagen überschreiben, ist auch für die bootstrap-logos
 
-favicon = "images/favicon.png"                                              # der image ordner muss in docs/ sein
-logo = "assets/logo.png"                                                    # der assets ordner muss in den docs/sein
+favicon = "images/cheatsheets-logo-favicon.png"                             # der image ordner muss in docs/ sein
+logo = "assets/cheatsheets-logo.png"                                        # der assets ordner muss in den docs/sein
 language = "de"                                                             # war auf "en"
 
 
@@ -121,10 +121,9 @@ features = [
 
 # [project.markdown_extensions.abbr]
 # [project.markdown_extensions.attr_list]
-# [project.markdown_extensions.pymdownx.snippets]
 # [project.markdown_extensions.def_list]
-# [project.markdown_extensions.pymdownx.tasklist]
-# custom_checkbox = true
+[project.markdown_extensions.pymdownx.tasklist]
+custom_checkbox = true
 
 ## Hervorhebungen
 [project.markdown_extensions.admonition]
@@ -144,7 +143,6 @@ line_spans = "__span"
 pygments_lang_class = true
 [project.markdown_extensions.pymdownx.inlinehilite]
 [project.markdown_extensions.pymdownx.snippets]
-#[project.markdown_extensions.pymdownx.superfences]
 
 # ---------------------------------------------------------------------------
 
