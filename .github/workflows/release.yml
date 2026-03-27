@@ -1,4 +1,4 @@
-name: Zensical Semver Release (.tar.gz)
+name: Release (.tar.gz)
 
 on:
   push:
@@ -13,15 +13,16 @@ on:
       - 'zensical.toml'
 
 permissions:
-  contents: write 
-  actions: read       
+  contents: write
+  actions: read
 
 jobs:
   release:
     runs-on: ubuntu-latest
+    if: github.event_name == 'push'   # ❗ Release nur bei Push (Merge)
 
     steps:
-      # 1️⃣ Checkout (FIX: v4)
+      # 1️⃣ Checkout
       - name: Checkout repo
         uses: actions/checkout@v4
 
@@ -59,7 +60,13 @@ jobs:
           NEXT_VERSION="${MAJOR}.${MINOR}.${PATCH}"
           echo "NEXT_VERSION=$NEXT_VERSION" >> $GITHUB_ENV
 
-      # 4️⃣ Release-Dateien sammeln
+      # 🆕 4️⃣ Check ob vorheriger Tag existiert (FIX für Fehler)
+      - name: Check if previous tag exists
+        run: |
+          COUNT=$(git tag --list "v*" | wc -l)
+          echo "TAG_COUNT=$COUNT" >> $GITHUB_ENV
+
+      # 5️⃣ Release-Dateien sammeln
       - name: Prepare release folder
         run: |
           rm -rf .release_temp
@@ -74,12 +81,12 @@ jobs:
           cp requirements.txt .release_temp/requirements.txt
           cp zensical.toml .release_temp/zensical.toml
 
-      # 5️⃣ tar.gz erstellen
+      # 6️⃣ tar.gz erstellen
       - name: Create archive
         run: |
           tar -czf zensical-release-${{ env.NEXT_VERSION }}.tar.gz -C .release_temp .
 
-      # 6️⃣ Release erstellen (FIXED)
+      # 7️⃣ Release erstellen
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1
         with:
@@ -91,9 +98,9 @@ jobs:
           immutableCreate: true
           skipIfReleaseExists: true
 
-          # 🏷️ Auto Changelog
+          # 🏷️ Auto Changelog (FIXED)
           generateReleaseNotes: true
-          generateReleaseNotesPreviousTag: true
+          generateReleaseNotesPreviousTag: ${{ env.TAG_COUNT != '0' }}
 
           draft: false
           prerelease: false
