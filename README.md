@@ -1,7 +1,7 @@
 ![Test Status](https://github.com/sonnytricky/cheatsheets/actions/workflows/lint.yml/badge.svg)
 [![Zensical Docs](https://img.shields.io/badge/Zensical-Docs-blue?style=flat-square)](https://zensical.org/docs/customization/)
-<!-- ![Release Status](https://github.com/sonnytricky/cheatsheets/actions/workflows/release.yml/badge.svg) -->
-![Zensical Version](https://img.shields.io/github/v/release/sonnytricky/cheatsheet?label=version&style=flat-square)
+![Release Status](https://github.com/sonnytricky/cheatsheets/actions/workflows/release.yml/badge.svg)
+![Zensical Version](https://img.shields.io/github/v/release/sonnytricky/cheatsheets?label=version&style=flat-square)
 
 ---
 

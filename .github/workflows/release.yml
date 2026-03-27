@@ -15,43 +15,37 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'   # Release nur bei Push/Merge auf main
-    steps:
-      # 1️⃣ Repo auschecken
-      - name: Checkout repo
-        uses: actions/checkout@v3
 
-      # 2️⃣ Git konfigurieren
+    steps:
+      # 1️⃣ Checkout (FIX: v4)
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      # 2️⃣ Git Setup
       - name: Setup Git
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
 
-      # 3️⃣ Semver automatisch erhöhen
+      # 3️⃣ Version bestimmen
       - name: Determine next version
-        id: semver
         run: |
           LAST_TAG=$(git tag --list "v*" | sort -V | tail -n1)
           if [ -z "$LAST_TAG" ]; then
             LAST_TAG="v0.0.0"
           fi
+
           MAJOR=$(echo $LAST_TAG | cut -d. -f1 | tr -d v)
           MINOR=$(echo $LAST_TAG | cut -d. -f2)
           PATCH=$(echo $LAST_TAG | cut -d. -f3)
 
           MSG="$(git log -1 --pretty=%B)"
-          INCREMENT="patch"
-          if echo "$MSG" | grep -iq "\[major\]"; then
-            INCREMENT="major"
-          elif echo "$MSG" | grep -iq "\[minor\]"; then
-            INCREMENT="minor"
-          fi
 
-          if [ "$INCREMENT" == "major" ]; then
+          if echo "$MSG" | grep -iq "\[major\]"; then
             MAJOR=$((MAJOR+1))
             MINOR=0
             PATCH=0
-          elif [ "$INCREMENT" == "minor" ]; then
+          elif echo "$MSG" | grep -iq "\[minor\]"; then
             MINOR=$((MINOR+1))
             PATCH=0
           else
@@ -59,10 +53,9 @@ jobs:
           fi
 
           NEXT_VERSION="${MAJOR}.${MINOR}.${PATCH}"
-          echo "Next version: $NEXT_VERSION"
           echo "NEXT_VERSION=$NEXT_VERSION" >> $GITHUB_ENV
 
-      # 4️⃣ Release-Ordner vorbereiten
+      # 4️⃣ Release-Dateien sammeln
       - name: Prepare release folder
         run: |
           rm -rf .release_temp
@@ -77,18 +70,19 @@ jobs:
           cp requirements.txt .release_temp/requirements.txt
           cp zensical.toml .release_temp/zensical.toml
 
-      # 5️⃣ .tar.gz Archiv erstellen
-      - name: Create release tar.gz
+      # 5️⃣ tar.gz erstellen
+      - name: Create archive
         run: |
-          tar -czf zensical-release-${NEXT_VERSION}.tar.gz -C .release_temp .
+          tar -czf zensical-release-${{ env.NEXT_VERSION }}.tar.gz -C .release_temp .
 
-      # 6️⃣ GitHub Release erstellen
+      # 6️⃣ Release erstellen (FIXED)
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1
         with:
-          tag: "v${NEXT_VERSION}"
-          name: "Release v${NEXT_VERSION}"
-          body: "Automatischer Release mit Semver [${NEXT_VERSION}] aufgrund Änderung in zensical.toml"
+          tag: v${{ env.NEXT_VERSION }}
+          name: Release v${{ env.NEXT_VERSION }}
+          artifacts: zensical-release-${{ env.NEXT_VERSION }}.tar.gz
           draft: false
           prerelease: false
-          assets: "zensical-release-${NEXT_VERSION}.tar.gz"
+          immutableCreate: true
+          skipIfReleaseExists: true
