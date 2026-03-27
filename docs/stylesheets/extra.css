@@ -1,0 +1,12 @@
+/* Back-to-top-Button */
+/*  Dark Mode, heller mit Rahmen*/
+[data-md-color-scheme="slate"] .md-top {
+  color: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+}
+
+/*  Light Mode, grau mit Rahmen */
+[data-md-color-scheme="default"] .md-top {
+  color: rgba(0, 0, 0, 0.6);      /* Grauton */
+  border: 1px solid rgba(0, 0, 0, 0.4);
+}
