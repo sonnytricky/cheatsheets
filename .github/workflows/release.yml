@@ -86,21 +86,37 @@ jobs:
         run: |
           tar -czf zensical-release-${{ env.NEXT_VERSION }}.tar.gz -C .release_temp .
 
-      # 7️⃣ Release erstellen
-      - name: Create GitHub Release
+      # 7️⃣ Release OHNE previous tag (erster Release)
+      - name: Create GitHub Release (first)
+        if: env.TAG_COUNT == '0'
         uses: ncipollo/release-action@v1
         with:
           tag: v${{ env.NEXT_VERSION }}
           name: Release v${{ env.NEXT_VERSION }}
           artifacts: zensical-release-${{ env.NEXT_VERSION }}.tar.gz
 
-          # 🔐 Immutable
           immutableCreate: true
           skipIfReleaseExists: true
 
-          # 🏷️ Auto Changelog (FIXED)
           generateReleaseNotes: true
-          generateReleaseNotesPreviousTag: ${{ env.TAG_COUNT != '0' }}
+
+          draft: false
+          prerelease: false
+
+      # 8️⃣ Release MIT previous tag (alle weiteren)
+      - name: Create GitHub Release (with previous tag)
+        if: env.TAG_COUNT != '0'
+        uses: ncipollo/release-action@v1
+        with:
+          tag: v${{ env.NEXT_VERSION }}
+          name: Release v${{ env.NEXT_VERSION }}
+          artifacts: zensical-release-${{ env.NEXT_VERSION }}.tar.gz
+
+          immutableCreate: true
+          skipIfReleaseExists: true
+
+          generateReleaseNotes: true
+          generateReleaseNotesPreviousTag: true
 
           draft: false
           prerelease: false
