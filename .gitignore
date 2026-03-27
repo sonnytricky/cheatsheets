@@ -26,13 +26,14 @@
 !*/.gitea/workflows/
 !*/.github/ISSUE_TEMPLATE/
 !*/.github/workflows/
-!*/images/
+!*/.release/
 !*/docs/assets/icons/
 !*/docs/examples/
 !*/docs/git/
 !*/docs/images/
 !*/docs/markdown/
 !*/docs/stylesheets/
+!*/images/
 !*/override/.icons/
 
 ##############################################
@@ -57,8 +58,10 @@
 !/.github/ISSUE_TEMPLATE/task.md
 !/.github/workflows/Demo.yaml
 !/.github/docs.yml
+!/.github/release.yml
 !/.github/workflows/lint.yml
 !/.github/PULL_REQUEST_TEMPLATE.md
+!/.release/README.md
 !/docs/assets/cheatsheets-logo.png
 !/docs/assets/logo.png
 !/docs/images/favicon.png
@@ -79,6 +82,7 @@
 !/images/cheatsheets.png
 !/images/git-cheatsheet.png
 !/images/social-preview.png
+!/overrides/.icons/copy.svg
 !/overrides/.icons/note-text-outline.svg
 !/.gitattributes
 !/.gitignore

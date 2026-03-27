@@ -1,0 +1,94 @@
+name: Zensical Semver Release (.tar.gz)
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'zensical.toml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'zensical.toml'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'   # Release nur bei Push/Merge auf main
+    steps:
+      # 1️⃣ Repo auschecken
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      # 2️⃣ Git konfigurieren
+      - name: Setup Git
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+
+      # 3️⃣ Semver automatisch erhöhen
+      - name: Determine next version
+        id: semver
+        run: |
+          LAST_TAG=$(git tag --list "v*" | sort -V | tail -n1)
+          if [ -z "$LAST_TAG" ]; then
+            LAST_TAG="v0.0.0"
+          fi
+          MAJOR=$(echo $LAST_TAG | cut -d. -f1 | tr -d v)
+          MINOR=$(echo $LAST_TAG | cut -d. -f2)
+          PATCH=$(echo $LAST_TAG | cut -d. -f3)
+
+          MSG="$(git log -1 --pretty=%B)"
+          INCREMENT="patch"
+          if echo "$MSG" | grep -iq "\[major\]"; then
+            INCREMENT="major"
+          elif echo "$MSG" | grep -iq "\[minor\]"; then
+            INCREMENT="minor"
+          fi
+
+          if [ "$INCREMENT" == "major" ]; then
+            MAJOR=$((MAJOR+1))
+            MINOR=0
+            PATCH=0
+          elif [ "$INCREMENT" == "minor" ]; then
+            MINOR=$((MINOR+1))
+            PATCH=0
+          else
+            PATCH=$((PATCH+1))
+          fi
+
+          NEXT_VERSION="${MAJOR}.${MINOR}.${PATCH}"
+          echo "Next version: $NEXT_VERSION"
+          echo "NEXT_VERSION=$NEXT_VERSION" >> $GITHUB_ENV
+
+      # 4️⃣ Release-Ordner vorbereiten
+      - name: Prepare release folder
+        run: |
+          rm -rf .release_temp
+          mkdir -p .release_temp
+          cp -r docs/assets .release_temp/assets
+          cp -r docs/examples .release_temp/examples
+          cp docs/stylesheets/extra.css .release_temp/extra.css
+          cp docs/index.md .release_temp/index.md
+          cp -r docs/images .release_temp/images
+          cp -r overrides .release_temp/overrides
+          cp .release/README.md .release_temp/README.md
+          cp requirements.txt .release_temp/requirements.txt
+          cp zensical.toml .release_temp/zensical.toml
+
+      # 5️⃣ .tar.gz Archiv erstellen
+      - name: Create release tar.gz
+        run: |
+          tar -czf zensical-release-${NEXT_VERSION}.tar.gz -C .release_temp .
+
+      # 6️⃣ GitHub Release erstellen
+      - name: Create GitHub Release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: "v${NEXT_VERSION}"
+          name: "Release v${NEXT_VERSION}"
+          body: "Automatischer Release mit Semver [${NEXT_VERSION}] aufgrund Änderung in zensical.toml"
+          draft: false
+          prerelease: false
+          assets: "zensical-release-${NEXT_VERSION}.tar.gz"
