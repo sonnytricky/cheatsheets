@@ -19,4 +19,3 @@ sudo apt-get update # (1)!
 ``` py title="Hallo Welt Programm.py"
 print("Hallo Welt")
 ```
-
