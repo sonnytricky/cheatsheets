@@ -16,10 +16,14 @@ permissions:
   contents: write
   actions: read
 
+# ✅ Node.js 24 erzwingen
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   release:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'   # ❗ Release nur bei Push (Merge)
+    if: github.event_name == 'push'   # Release nur bei Push (Merge)
 
     steps:
       # 1️⃣ Checkout
@@ -60,7 +64,7 @@ jobs:
           NEXT_VERSION="${MAJOR}.${MINOR}.${PATCH}"
           echo "NEXT_VERSION=$NEXT_VERSION" >> $GITHUB_ENV
 
-      # 🆕 4️⃣ Check ob vorheriger Tag existiert (FIX für Fehler)
+      # 🆕 4️⃣ Check ob vorheriger Tag existiert
       - name: Check if previous tag exists
         run: |
           COUNT=$(git tag --list "v*" | wc -l)
