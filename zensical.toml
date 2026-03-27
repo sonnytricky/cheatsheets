@@ -43,7 +43,7 @@ site_dir = "site"
 # css und javascript
 # ----------------------------------------------------------------------------
 
-#extra_css = ["stylesheets/extra.css"]                                      # der Ordner wurden bereits angelegt
+extra_css = ["stylesheets/extra.css"]                                      # der Ordner wurden bereits angelegt
 #extra_javascript = ["javascripts/extra.js"]
 
 # ----------------------------------------------------------------------------
