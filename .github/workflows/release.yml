@@ -12,6 +12,10 @@ on:
     paths:
       - 'zensical.toml'
 
+permissions:
+  contents: write 
+  actions: read       
+
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -82,7 +86,14 @@ jobs:
           tag: v${{ env.NEXT_VERSION }}
           name: Release v${{ env.NEXT_VERSION }}
           artifacts: zensical-release-${{ env.NEXT_VERSION }}.tar.gz
-          draft: false
-          prerelease: false
+
+          # 🔐 Immutable
           immutableCreate: true
           skipIfReleaseExists: true
+
+          # 🏷️ Auto Changelog
+          generateReleaseNotes: true
+          generateReleaseNotesPreviousTag: true
+
+          draft: false
+          prerelease: false
