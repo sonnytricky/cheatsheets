@@ -51,9 +51,10 @@
 !/.github/ISSUE_TEMPLATE/idea.md
 !/.github/ISSUE_TEMPLATE/task.md
 !/.github/Demo.yaml
-!/.github/docs.yml
+!/.github/workflows/docs.yml
 !/.github/workflows/release.yml
 !/.github/lint.yml
+!/.github/release-backup.yml
 !/.github/PULL_REQUEST_TEMPLATE.md
 !/.release/README.md
 !/docs/assets/cheatsheets-logo.png
