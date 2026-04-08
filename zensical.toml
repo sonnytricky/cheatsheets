@@ -24,20 +24,30 @@ site_dir = "site"
 
 # Wenn man die Navigation auskommentiert, funktioniert die automatische Ordnererstellung
 
-#nav = [
+
+nav = [
 #  {"Get started" = "index.md"},
-#  {"GIT" = [
-#     "git/index.md",
-#     "git/Ordner_zur_Repo_machen.md" 
-#  ]},
-#  {"Markdown" = "markdown/markdown.md"},  
-#  {"Examples" = [
-#     "examples/index.md",
-#     "examples/Checkboxen.md",
-#     "examples/Code-Blöcke.md",
-#     "examples/Notizen.md"
-#  ]},
-#]
+
+  {"JavaScript" = [
+    "JavaScript/index.md",
+    "JavaScript/Array.md",
+    "JavaScript/Switch.md"
+  ]},
+
+  {"GIT" = [
+    "git/index.md",
+    "git/Ordner_zur_Repo_machen.md"
+  ]},
+
+  {"Markdown" = "markdown/markdown.md"},
+
+  {"Examples" = [
+    "examples/index.md",
+    "examples/Checkboxen.md",
+    "examples/Code-Blöcke.md",
+    "examples/Notizen.md"
+  ]},
+]
 
 # ----------------------------------------------------------------------------
 # css und javascript
