@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - 'zensical.toml'
+
   pull_request:
     branches:
       - main
@@ -16,19 +17,19 @@ permissions:
   contents: write
   actions: read
 
-# ✅ Node.js 24 erzwingen
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   release:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'   # Release nur bei Push (Merge)
 
     steps:
-      # 1️⃣ Checkout
+      # 1️⃣ Checkout (WICHTIG: full history + tags)
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       # 2️⃣ Git Setup
       - name: Setup Git
@@ -36,17 +37,20 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
 
-      # 3️⃣ Version bestimmen
+      # 3️⃣ Tags sicher holen
+      - name: Fetch tags
+        run: git fetch --tags --force
+
+      # 4️⃣ Version bestimmen (robust + safe fallback)
       - name: Determine next version
         run: |
-          LAST_TAG=$(git tag --list "v*" | sort -V | tail -n1)
-          if [ -z "$LAST_TAG" ]; then
-            LAST_TAG="v0.0.0"
-          fi
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
 
-          MAJOR=$(echo $LAST_TAG | cut -d. -f1 | tr -d v)
-          MINOR=$(echo $LAST_TAG | cut -d. -f2)
-          PATCH=$(echo $LAST_TAG | cut -d. -f3)
+          VERSION=${LAST_TAG#v}
+
+          MAJOR=$(echo $VERSION | cut -d. -f1)
+          MINOR=$(echo $VERSION | cut -d. -f2)
+          PATCH=$(echo $VERSION | cut -d. -f3)
 
           MSG="$(git log -1 --pretty=%B)"
 
@@ -64,17 +68,12 @@ jobs:
           NEXT_VERSION="${MAJOR}.${MINOR}.${PATCH}"
           echo "NEXT_VERSION=$NEXT_VERSION" >> $GITHUB_ENV
 
-      # 🆕 4️⃣ Check ob vorheriger Tag existiert
-      - name: Check if previous tag exists
-        run: |
-          COUNT=$(git tag --list "v*" | wc -l)
-          echo "TAG_COUNT=$COUNT" >> $GITHUB_ENV
-
-      # 5️⃣ Release-Dateien sammeln
+      # 5️⃣ Release-Dateien vorbereiten
       - name: Prepare release folder
         run: |
           rm -rf .release_temp
           mkdir -p .release_temp
+
           cp -r docs/assets .release_temp/assets
           cp -r docs/examples .release_temp/examples
           cp docs/stylesheets/extra.css .release_temp/extra.css
@@ -85,42 +84,25 @@ jobs:
           cp requirements.txt .release_temp/requirements.txt
           cp zensical.toml .release_temp/zensical.toml
 
-      # 6️⃣ tar.gz erstellen
+      # 6️⃣ Archive bauen
       - name: Create archive
         run: |
           tar -czf zensical-release-${{ env.NEXT_VERSION }}.tar.gz -C .release_temp .
 
-      # 7️⃣ Release OHNE previous tag (erster Release)
-      - name: Create GitHub Release (first)
-        if: env.TAG_COUNT == '0'
+      # 7️⃣ Tag erstellen (WICHTIG: verhindert doppelte Releases)
+      - name: Create Git tag
+        run: |
+          git tag v${{ env.NEXT_VERSION }}
+          git push origin v${{ env.NEXT_VERSION }}
+
+      # 8️⃣ GitHub Release erstellen (EINHEITLICH)
+      - name: Create GitHub Release
         uses: ncipollo/release-action@v1
         with:
           tag: v${{ env.NEXT_VERSION }}
           name: Release v${{ env.NEXT_VERSION }}
           artifacts: zensical-release-${{ env.NEXT_VERSION }}.tar.gz
 
-          immutableCreate: true
-          skipIfReleaseExists: true
-
           generateReleaseNotes: true
-
-          draft: false
-          prerelease: false
-
-      # 8️⃣ Release MIT previous tag (alle weiteren)
-      - name: Create GitHub Release (with previous tag)
-        if: env.TAG_COUNT != '0'
-        uses: ncipollo/release-action@v1
-        with:
-          tag: v${{ env.NEXT_VERSION }}
-          name: Release v${{ env.NEXT_VERSION }}
-          artifacts: zensical-release-${{ env.NEXT_VERSION }}.tar.gz
-
-          immutableCreate: true
-          skipIfReleaseExists: true
-
-          generateReleaseNotes: true
-          generateReleaseNotesPreviousTag: true
-
           draft: false
           prerelease: false
